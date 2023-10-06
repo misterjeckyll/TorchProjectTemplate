@@ -1,0 +1,60 @@
+# train_config.yaml
+meta:
+  dataset: "Imagenet"
+  log_dir: "./logs"
+  optimizer: "Adam"
+  criterion: "CrossEntropyLoss"
+  scheduler: "StepLR"
+model:
+  class_path: resnet_GTSRB.ResFour
+  init_args:
+    num_classes: 4
+    lr: 0.001
+    weight_decay: 0.0001
+data:
+  class_path: mycode.mydatamodules.MyDataModule
+  init_args:
+    batch_size: 8
+    num_workers: 4
+    seed: 42
+    train_size: 0.8
+    val_size: 0.2
+    data_dir: "./data/dataset" #  the place to find the processed dataset files (train, val, test)
+    store_dir: "./data/store"  #  the place to find the raw ziped data files
+trainer:
+  accelerator: auto
+  strategy: auto
+  devices: auto
+  precision: 16
+  max_epochs: 5
+  deterministic: False
+  log_every_n_steps: 1
+  max_time: "00:00:30:00"
+  callbacks:
+    - class_path: pytorch_lightning.callbacks.ModelCheckpoint
+      init_args:
+        dirpath: "../checkpoints"
+        monitor: "val_loss"
+        mode: "min"
+        save_top_k: 1
+        save_last: True
+        filename: "resnetfour_{epoch:03d}-{val_loss:.2f}"
+    - class_path: callbacks.batchReportCallback
+      init_args:
+  logger:
+    class_path: lightning.pytorch.loggers.WandbLogger
+    init_args:
+      save_dir: '../logs'
+      #project: 'attention'
+      name: 'resnet18_four_GTSRB'
+      notes: "Experiment to use config files and training cli as well as correctly logging metrics"
+      version: null
+      log_model: all
+      group: 'lightning 2.0.2'
+      dir: 'wandb'
+
+
+
+
+
+

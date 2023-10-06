@@ -1,0 +1,68 @@
+# pytorch_lightning==1.9.3
+seed_everything: 42
+model:
+  class_path: resnet_GTSRB.ResFour
+  init_args:
+    num_class: 4
+    lr: 0.001
+    weight_decay: 0.0001
+data:
+  class_path: GTSRB_dataset.GTSRBDataModule
+  init_args:
+    batch_size: 16
+    num_workers: 4
+    seed: 42
+    train_proportion: 0.8
+    data_dir: "../data/dataset" #  the place to find the processed dataset files (train, val, test)
+    store_dir: "../data/store"  #  the place to find the raw ziped data files
+trainer:
+  max_epochs: 5
+  deterministic: False
+  log_every_n_steps: 1
+  max_time: "00:00:30:00"
+  devices: auto
+  enable_model_summary: True
+  enable_progress_bar: True
+  fast_dev_run: False
+  accelerator: auto
+  precision: 32
+  resume_from_checkpoint: null
+  auto_lr_find: False
+  callbacks:
+  - class_path: pytorch_lightning.callbacks.ModelCheckpoint
+    init_args:
+      dirpath: "../checkpoints"
+      monitor: "val_acc"
+      mode: "max"
+      save_top_k: 1
+      save_last: True
+      filename: "resnetfour_{epoch:03d}-{val_loss:.2f}"
+  - class_path: callbacks.batchReportCallback
+    init_args:
+      num_samples: 8
+      fig_width: 7
+      fig_height: 4
+      grid_width: 4
+      grid_height: 2
+      fig_dir: "../results"
+  logger:
+  - class_path: pytorch_lightning.loggers.WandbLogger
+    init_args:
+      project: "resnet_GTSRB"
+      name: "resnetfour_01"
+      notes: "Experiment to use config files and training cli as well as correctly logging metrics"
+      tags: ["imagenet", "Resnet18", "GTSRB"]
+      save_dir: "../logs"
+  - class_path: pytorch_lightning.loggers.TensorBoardLogger
+    init_args:
+      save_dir: "../logs"
+      name: "resnetfour_02"
+      version: "0.0.1"
+      log_graph: True
+      prefix: ""
+      sub_dir: null
+
+
+
+
+

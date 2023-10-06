@@ -1,0 +1,12 @@
+/experiments/pytorchTests/data/*
+/experiments/data/dataset/*
+/experiments/data/store/*
+/experiments/*/logs/wandb/*
+/experiments/*/checkpoints/*
+/experiments/*/data/*
+/experiments/*/wandb
+/.ipynb_checkpoints/
+.idea
+*.docx
+documentation/UDIVA_v0.5_license.pdf
+documentation/tobii-pro-glasses-2-user-manual.pdf
