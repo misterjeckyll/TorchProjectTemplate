@@ -99,16 +99,17 @@ TorchProjectTemplate
 │   └── GTSRB                   # An experiment is a sub project assotiated with a single dataset
 │       ├── checkpoints         # Saved training states to go back to
 │       ├── data                # Separate data folder
-│           └── dataset         # Cleaned ppm dataset object location 
+│           ├── dataset         # Cleaned ppm dataset object location 
 │           └── store           # Raw data archives and files
 │       ├── deployment          # Proof of concept webapp deployment code
 │       ├── logs                # Training metrics logs
-│       └── results             # Training result figures 
-│       └── GTSRB.md            # Dataset and task description, hypothesises and conclusions 
-|       └── train_config.yaml   # hyperparameters and training config file
+│       ├── results             # Training result figures 
+│       ├── GTSRB.md            # Dataset and task description, hypothesises and conclusions 
+│       ├── train_config.yaml   # hyperparameters and training config file
+│       └──GTSRB_training.ipynb # Main architecture definition and training code
 ├── img                         # Assets folder for the readme markdown 
 ├── scripts                     # Place here your installation and deployement shell scripts 
-└── pytorch_environment.yml     # Anaconda virtual environment file
+├── pytorch_environment.yml     # Anaconda virtual environment file
 └── README.md
 ```
 
